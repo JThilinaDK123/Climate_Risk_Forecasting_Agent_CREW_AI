@@ -1,54 +1,120 @@
-# ClimateForecasting Crew
+# Climate Risk Forecasting Agents (CrewAI Framework)
 
-Welcome to the ClimateForecasting Crew project, powered by [crewAI](https://crewai.com). This template is designed to help you set up a multi-agent AI system with ease, leveraging the powerful and flexible framework provided by crewAI. Our goal is to enable your agents to collaborate effectively on complex tasks, maximizing their collective intelligence and capabilities.
+## Overview
+This project uses a **multi-agent system** built on the **CrewAI framework** to perform **climate risk forecasting and reporting** for any given location and date.  
+The agents collaborate to research, analyze, and report emerging environmental risks such as **droughts**, **floods**, and **wildfires**, leveraging satellite-derived indices (NDVI, NDMI, NDRI) and atmospheric data with the helop of surper tool.
 
-## Installation
+The framework integrates advanced geospatial data analysis with natural language summarization, enabling automated research synthesis and climate intelligence reporting.
 
-Ensure you have Python >=3.10 <3.14 installed on your system. This project uses [UV](https://docs.astral.sh/uv/) for dependency management and package handling, offering a seamless setup and execution experience.
+---
 
-First, if you haven't already, install uv:
+## System Architecture
 
-```bash
-pip install uv
-```
+The system is composed of **two specialized AI agents**:
 
-Next, navigate to your project directory and install the dependencies:
+### 1. `climate_researcher`
+**Role:** Climate Risk Senior Data Researcher  
+**Model:** `openai/gpt-4o-mini`  
 
-(Optional) Lock the dependencies and install them by using the CLI command:
-```bash
-crewai install
-```
-### Customizing
+**Goal:**  
+Investigate emerging scientific and technological advancements in **climate risk forecasting** for a specified `{location}` and `{date}`.  
+The agent focuses on environmental indicators such as:
+- NDVI (Normalized Difference Vegetation Index)
+- NDMI (Normalized Difference Moisture Index)
+- NDRI (Normalized Difference Redness Index)
+- Soil moisture and atmospheric variables  
 
-**Add your `OPENAI_API_KEY` into the `.env` file**
+**Backstory:**  
+A veteran environmental scientist skilled in geospatial analytics, satellite observation, and climate modeling.  
+The researcher continuously reviews datasets like **MODIS**, **Sentinel**, and **Landsat** to identify anomalies, trends, and modeling innovations relevant to climate risk forecasting.
 
-- Modify `src/climate_forecasting/config/agents.yaml` to define your agents
-- Modify `src/climate_forecasting/config/tasks.yaml` to define your tasks
-- Modify `src/climate_forecasting/crew.py` to add your own logic, tools and specific args
-- Modify `src/climate_forecasting/main.py` to add custom inputs for your agents and tasks
+**Task: `research_task`**
+- **Description:**  
+  Conducts an advanced investigation into climate risk forecasting for `{location}`.  
+  Analyzes the latest scientific literature, Earth observation datasets, and predictive modeling techniques.  
+- **Expected Output:**  
+  A Markdown file (`output/research_findings.md`) containing **10 bullet points** summarizing the most significant findings, datasets, and modeling approaches as of `{date}`.
 
-## Running the Project
+---
 
-To kickstart your crew of AI agents and begin task execution, run this from the root folder of your project:
+### 2. `climate_reporting_agent`
+**Role:** Climate Risk Reporting Analyst  
+**Model:** `openai/gpt-4o-mini`  
 
-```bash
-$ crewai run
-```
+**Goal:**  
+Transform technical climate research outputs into **clear, actionable reports** for decision-makers and policymakers.  
+This includes summarizing geospatial and atmospheric trends, forecasting outcomes, and highlighting key environmental risk drivers.
 
-This command initializes the climate_forecasting Crew, assembling the agents and assigning them tasks as defined in your configuration.
+**Backstory:**  
+An expert communicator skilled in turning complex model outputs into accessible insights.  
+They prepare detailed summaries emphasizing implications such as:
+- Increasing wildfire probability  
+- Flood vulnerability  
+- Vegetation health decline  
+- Soil moisture depletion  
 
-This example, unmodified, will run the create a `report.md` file with the output of a research on LLMs in the root folder.
+**Task: `reporting_task`**
+- **Description:**  
+  Synthesizes all research and analytical outputs into a comprehensive Markdown report.  
+  Explains how geospatial indicators and weather trends contribute to forecasted risks for `{location}` at `{date}`.  
+- **Expected Output:**  
+  A well-structured climate risk report (`output/final_climate_risk_report.md`) including:
+  - Executive Summary  
+  - Methodology Overview  
+  - Risk Interpretation  
+  - Policy Recommendations  
 
-## Understanding Your Crew
+**Context:**  
+Uses results from `research_task` as input.
 
-The climate_forecasting Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your crew.
+---
 
-## Support
 
-For support, questions, or feedback regarding the ClimateForecasting Crew or crewAI.
-- Visit our [documentation](https://docs.crewai.com)
-- Reach out to us through our [GitHub repository](https://github.com/joaomdmoura/crewai)
-- [Join our Discord](https://discord.com/invite/X4JWnZnxPb)
-- [Chat with our docs](https://chatg.pt/DWjSBZn)
+## How It Works
 
-Let's create wonders together with the power and simplicity of crewAI.
+1. **Research Phase**  
+   The `climate_researcher` agent investigates recent climate forecasting advancements, compiling structured findings into `output/research_findings.md`.
+
+2. **Reporting Phase**  
+   The `climate_reporting_agent` reviews the researcher’s findings, interprets key trends (e.g., NDVI decline, NDMI anomalies), and generates a full report in `output/final_climate_risk_report.md`.
+
+3. **Output Example**
+   - Detailed environmental indicator trends  
+   - Risk factor correlations  
+   - Region-specific hazard projections  
+   - Policy-relevant insights  
+
+---
+
+## Variables
+
+| Variable | Description |
+|-----------|--------------|
+| `{location}` | Target location or region for climate risk forecasting |
+| `{date}` | Time period or projection date for analysis |
+| `{current_year}` | Current operational year for context in research and modeling |
+
+---
+
+## Data Sources
+
+The agents utilize or reference:
+- **MODIS (Moderate Resolution Imaging Spectroradiometer)**
+- **Sentinel (ESA Copernicus Mission)**
+- **Landsat (USGS & NASA)**
+- **Regional Climate Models (RCMs)**
+- **Peer-reviewed climate forecasting studies**
+- **Geospatial and meteorological datasets**
+
+---
+
+## Example Use Case
+
+Forecasting wildfire and drought risks for **California, USA** for **2026**:
+
+```yaml
+location: California
+date: 2026
+current_year: 2025
+
+
